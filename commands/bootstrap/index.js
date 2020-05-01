@@ -199,9 +199,12 @@ class BootstrapCommand extends Command {
 
     tasks.push(
       () => this.getDependenciesToInstall(),
-      result => this.installExternalDependencies(result),
-      () => this.symlinkPackages()
+      result => this.installExternalDependencies(result)
     );
+
+    if (!this.options.nolink) {
+      tasks.push(() => this.symlinkPackages());
+    }
 
     if (scriptsEnabled) {
       tasks.push(
@@ -492,7 +495,7 @@ class BootstrapCommand extends Command {
                 return pMap(dependents, pkg => {
                   const src = this.hoistedDirectory(name);
 
-                  return symlinkBinary(src, pkg);
+                  return this.options.nolink ? Promise.resolve() : symlinkBinary(src, pkg);
                 });
               }
             })

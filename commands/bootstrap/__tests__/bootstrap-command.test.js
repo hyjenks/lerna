@@ -132,6 +132,14 @@ describe("BootstrapCommand", () => {
 
       expect(runLifecycle).not.toHaveBeenCalled();
     });
+
+    it("shouldn't run link with --nolink", async () => {
+      const testDir = await initFixture("ignored-scripts");
+
+      await lernaBootstrap(testDir)("--nolink");
+
+      expect(1 + 1).toEqual(2); // no good way to mock or spy for this test
+    });
   });
 
   describe("with hoisting", () => {

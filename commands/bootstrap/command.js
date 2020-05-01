@@ -77,6 +77,11 @@ exports.builder = yargs => {
         type: "string",
         defaultDescription: ".",
       },
+      nolink: {
+        group: "Command Options:",
+        describe: "Disable symlinks (for CI or production)",
+        type: "boolean",
+      },
     });
 
   return filterable(yargs);
